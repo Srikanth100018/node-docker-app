@@ -19,21 +19,21 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh '''
-                docker build -t node-docker-app:${BUILD_NUMBER} .
-                docker tag node-docker-app:${BUILD_NUMBER} b211359/node-docker-app:${BUILD_NUMBER}
+                docker build -t node-docker-app:0.0.1 .
+                docker tag node-docker-app:0.0.1 b211359/node-docker-app:0.0.1
                 '''
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                sh 'docker push b211359/node-docker-app:${BUILD_NUMBER}'
+                sh 'docker push b211359/node-docker-app:0.0.1'
             }
         }
         
         stage('Create container') {
             steps {
-                sh 'docker run -d -p 3000:8080 b211359/node-docker-app:${BUILD_NUMBER}'
+                sh 'docker run -d -p 3000:8080 b211359/node-docker-app:0.0.1'
             }
         }
 
