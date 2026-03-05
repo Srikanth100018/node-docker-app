@@ -27,7 +27,10 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                sh 'docker push b211359/node-docker-app:0.0.1'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    sh 'echo $PASS | docker login -u $USER --password-stdin'
+                    sh 'docker push b211359/node-docker-app:0.0.1'
+                }
             }
         }
         
